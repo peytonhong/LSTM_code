@@ -1,4 +1,3 @@
-
 import tensorflow as tf
 from tensorflow.contrib.rnn import BasicLSTMCell
 import numpy as np
