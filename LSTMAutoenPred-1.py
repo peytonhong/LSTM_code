@@ -16,11 +16,12 @@ class LSTMAutoencoder(object):
   """
 
   def __init__(self, hidden_num, inputs, predinputs, 
-    cell=None, optimizer=None, reverse=True, 
-    decode_without_input=True):
-
+    cell=None, optimizer=None, reverse=True, decode_without_input=True):      
+      
+    
     self.batch_num = inputs[0].shape[0]
     self.elem_num  = inputs[0].shape[1]
+    
 
     if cell is None:
       self._enc_cell  = BasicLSTMCell(hidden_num)
@@ -46,9 +47,8 @@ class LSTMAutoencoder(object):
       dec_weight_ = tf.Variable(
         tf.truncated_normal([hidden_num, self.elem_num], stddev=0.1, dtype=tf.float32),
         name="dec_weight")
-      dec_bias_ = tf.Variable(
-        tf.constant(0.1, shape=[self.elem_num], dtype=tf.float32),
-        name="dec_bias")   
+      dec_bias_ = tf.Variable(tf.constant(0.1, shape=[self.elem_num], dtype=tf.float32),
+        name="dec_bias")
 
       if decode_without_input:
         dec_inputs = [tf.zeros(tf.shape(inputs[0]), dtype=tf.float32)
@@ -67,6 +67,8 @@ class LSTMAutoencoder(object):
         dec_weight_ = tf.tile(tf.expand_dims(dec_weight_, 0), [len(inputs),1,1])  # (3,4,1)
         #print(dec_weight_.shape)
         self.output_ = tf.matmul(dec_outputs, dec_weight_) + dec_bias_ # (3,2,1)
+        #print(len(dec_outputs), dec_outputs[0].shape)
+        self.dec_outputs = dec_outputs
 
       else :        
         dec_input_ = tf.zeros(tf.shape(inputs[0]), dtype=tf.float32)
@@ -116,7 +118,7 @@ class LSTMAutoencoder(object):
       self.train = tf.train.AdamOptimizer().minimize(self.loss)
     else :
       self.train = optimizer.minimize(self.loss)
-
+    
 #inputs=np.array([[[1],[2]],[[2],[3]],[[3],[4]]],dtype=np.float32)
 #predinputs=np.array([[[4],[5]],[[5],[6]],[[6],[7]]],dtype=np.float32)
 inputs=[]
