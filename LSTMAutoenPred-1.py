@@ -110,14 +110,10 @@ class LSTMAutoencoder(object):
     else :
       self.train = optimizer.minimize(self.loss)
 
-#inputs=np.array([[[1.],[4.]],[[2.],[5.]],[[3.],[6.]]],dtype=np.float32)
-#testX=np.array([[[4.],[5.]],[[5.],[6.]],[[6.],[7.]]],dtype=np.float32)
-#predinputs=np.array([[[-2.],[1.]],[[-1.],[2.]],[[0.],[3.]]],dtype=np.float32)
-#predtestX=np.array([[[1.],[2.]],[[2.],[3.]],[[3.],[4.]]],dtype=np.float32)
-inputs = np.array([[[1],[2],[3]],[[4],[5],[6]]], dtype=np.float32)
-testX = np.array([[[2],[3],[4]],[[3],[4],[5]]], dtype=np.float32)
-predinputs = np.array([[[4],[5],[6]],[[7],[8],[9]]], dtype=np.float32)
-predtestX = np.array([[[3],[4],[5]],[[4],[5],[6]]], dtype=np.float32)
+inputs=np.array([[[1.],[4.]],[[2.],[5.]],[[3.],[6.]]],dtype=np.float32)
+testX=np.array([[[4.],[5.]],[[5.],[6.]],[[6.],[7.]]],dtype=np.float32)
+predinputs=np.array([[[-2.],[1.]],[[-1.],[2.]],[[0.],[3.]]],dtype=np.float32)
+predtestX=np.array([[[1.],[2.]],[[2.],[3.]],[[3.],[4.]]],dtype=np.float32)
 
 ae = LSTMAutoencoder(4, inputs, predinputs)
 with tf.Session() as sess:
